@@ -1,4 +1,4 @@
-package com.test.Testing;
+package com.test.Testing.data.dto.request;
 
 import com.test.Testing.data.model.Gender;
 import lombok.AllArgsConstructor;
