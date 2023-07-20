@@ -4,5 +4,6 @@ import com.test.Testing.RegisterStudentRequest;
 
 public interface StudentService {
     String registerStudent(RegisterStudentRequest registerStudentRequest);
+    String login();
 
 }
