@@ -3,6 +3,7 @@ package com.test.Testing.service.student;
 import com.test.Testing.data.dto.request.LoginRequest;
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
 import com.test.Testing.data.model.AppUser;
+import com.test.Testing.data.model.Role;
 import com.test.Testing.data.model.Student;
 import com.test.Testing.data.repository.StudentRepository;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,9 @@ public class StudentServiceImpl implements StudentService{
         appUser.setPhoneNumber(registerStudentRequest.getPhoneNumber());
         appUser.setEmail(registerStudentRequest.getEmail());
         appUser.setPassword(registerStudentRequest.getPassword());
-        student.setAppuser(appUser);
+        appUser.setRole(Role.STUDENT);
+
+        student.setAppUser(appUser);
         student.setGender(registerStudentRequest.getGender());
         studentRepository.save(student);
         return "Student Registration Successful";
@@ -30,6 +33,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public String login(LoginRequest loginRequest) {
+
         return null;
     }
 
@@ -41,6 +45,12 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Student getStudentById(Long studentId) {
         return null;
+    }
+
+    @Override
+    public Student getStudentByEmail(String email) {
+        return studentRepository.getStudentsByAppUser_Email(email).orElseThrow(
+                ()-> new RuntimeException("Student with email %s not found".formatted(email)));
     }
 
     @Override

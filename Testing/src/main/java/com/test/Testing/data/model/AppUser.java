@@ -1,9 +1,6 @@
 package com.test.Testing.data.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,11 @@ public class AppUser {
     private Long id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String phoneNumber;
+    @Column(unique = true)
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

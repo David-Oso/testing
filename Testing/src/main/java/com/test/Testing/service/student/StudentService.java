@@ -11,6 +11,7 @@ public interface StudentService {
     String login(LoginRequest loginRequest);
     String writeToAStudent(Long firstStudentId, Long secondStudentId);
     Student getStudentById(Long studentId);
+    Student getStudentByEmail(String email);
     List<Student> getAllStudents();
     void deleteAStudent(Long studentId);
     void deleteAllStudents();

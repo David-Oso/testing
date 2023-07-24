@@ -2,6 +2,7 @@ package com.test.Testing.service.student;
 
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
 import com.test.Testing.data.model.Gender;
+import com.test.Testing.data.model.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,12 @@ class StudentServiceImplTest {
 
     @Test
     void getStudentById() {
+    }
+
+    @Test
+    void getStudentByEmailTest(){
+        Student student = studentService.getStudentByEmail("ayo@gmail.com");
+        assertThat(student.getAppUser().getEmail()).isEqualTo(registerStudentRequest2.getEmail());
     }
 
     @Test

@@ -16,9 +16,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private AppUser appuser;
+    private AppUser appUser;
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Enumerated(EnumType.STRING)
-    private final Role role = Role.STUDENT;
 }
