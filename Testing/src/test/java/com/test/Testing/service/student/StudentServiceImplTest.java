@@ -83,5 +83,8 @@ class StudentServiceImplTest {
 
     @Test
     void deleteAllStudents() {
+        studentService.deleteAllStudents();
+        Long numberOfStudents = 0L;
+        assertThat(studentService.studentCount()).isEqualTo(numberOfStudents);
     }
 }
