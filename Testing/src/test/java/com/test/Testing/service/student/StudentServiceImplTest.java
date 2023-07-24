@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 class StudentServiceImplTest {
     @Autowired StudentService studentService;
@@ -35,6 +36,11 @@ class StudentServiceImplTest {
 
     @Test
     void registerStudent() {
+        String response1 = studentService.registerStudent(registerStudentRequest1);
+        assertThat(response1).isEqualTo("Student Registration Successful");
+
+        String response2 = studentService.registerStudent(registerStudentRequest2);
+        assertThat(response2).isEqualTo("Student Registration Successful");
     }
 
     @Test
