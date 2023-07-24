@@ -71,6 +71,7 @@ class StudentServiceImplTest {
     @Test
     void getAllStudents() {
         Long numberOfStudents = 2L;
+        assertThat(studentService.getAllStudents()).isNotNull();
         assertThat(studentService.studentCount()).isEqualTo(numberOfStudents);
     }
 
