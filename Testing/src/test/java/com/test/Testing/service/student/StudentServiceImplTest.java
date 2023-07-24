@@ -72,20 +72,20 @@ class StudentServiceImplTest {
     void getAllStudents() {
         Long numberOfStudents = 2L;
         assertThat(studentService.getAllStudents()).isNotNull();
-        assertThat(studentService.studentCount()).isEqualTo(numberOfStudents);
+        assertThat(studentService.getNumberOfStudents()).isEqualTo(numberOfStudents);
     }
 
     @Test
     void deleteAStudent() {
-        studentService.deleteAStudent(2L);
+        studentService.deleteStudentById(2L);
         Long numberOfStudents = 1L;
-        assertThat(studentService.studentCount()).isEqualTo(numberOfStudents);
+        assertThat(studentService.getNumberOfStudents()).isEqualTo(numberOfStudents);
     }
 
     @Test
     void deleteAllStudents() {
         studentService.deleteAllStudents();
         Long numberOfStudents = 0L;
-        assertThat(studentService.studentCount()).isEqualTo(numberOfStudents);
+        assertThat(studentService.getNumberOfStudents()).isEqualTo(numberOfStudents);
     }
 }

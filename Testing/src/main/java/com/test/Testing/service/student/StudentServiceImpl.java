@@ -58,7 +58,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public void deleteAStudent(Long studentId) {
+    public void deleteStudentById(Long studentId) {
         studentRepository.deleteById(studentId);
 
     }
@@ -69,7 +69,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Long studentCount() {
+    public Long getNumberOfStudents() {
         return studentRepository.count();
     }
 }

@@ -12,7 +12,7 @@ public interface StudentService {
     Student getStudentById(Long studentId);
     Student getStudentByEmail(String email);
     List<Student> getAllStudents();
-    void deleteAStudent(Long studentId);
+    void deleteStudentById(Long studentId);
     void deleteAllStudents();
-    Long studentCount();
+    Long getNumberOfStudents();
 }

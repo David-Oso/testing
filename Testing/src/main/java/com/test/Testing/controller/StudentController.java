@@ -2,17 +2,18 @@ package com.test.Testing.controller;
 
 import com.test.Testing.data.dto.request.LoginRequest;
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
+import com.test.Testing.data.model.Student;
 import com.test.Testing.service.student.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/testing/student")
+@RequestMapping("/api/v1/testing/student/")
 public class StudentController {
     private final StudentService studentService;
 
@@ -21,17 +22,43 @@ public class StudentController {
         String response = studentService.registerStudent(registerStudentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    @PostMapping("login")
     public ResponseEntity<?> login(LoginRequest loginRequest){
         String response = studentService.login(loginRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("get/{id}")
+    public ResponseEntity<?> getStudentById(@PathVariable Long id){
+        Student student = studentService.getStudentById(id);
+        return ResponseEntity.ok(student);
+    }
 
-//    String login(LoginRequest loginRequest);
-//    Student getStudentById(Long studentId);
-//    Student getStudentByEmail(String email);
-//    List<Student> getAllStudents();
-//    void deleteAStudent(Long studentId);
-//    void deleteAllStudents();
-//    Long studentCount();
+    @GetMapping("get")
+    public ResponseEntity<?> getStudentByEmail(@RequestParam String email){
+        Student student = studentService.getStudentByEmail(email);
+        return ResponseEntity.ok(student);
+    }
+
+    @GetMapping("all/get")
+    public ResponseEntity<?> getAllStudents(){
+        List<Student> students = studentService.getAllStudents();
+        return ResponseEntity.ok(students);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> deleteStudentById(@PathVariable Long id){
+        studentService.deleteStudentById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Student deleted.");
+    }
+    @DeleteMapping("all/delete")
+    public ResponseEntity<?> deleteAllStudents(){
+        studentService.deleteAllStudents();
+        return ResponseEntity.status(HttpStatus.OK).body("All students deleted");
+    }
+    @GetMapping
+    public ResponseEntity<?> getNumberOfStudents(){
+        Long  numberOfStudents = studentService.getNumberOfStudents();
+        return ResponseEntity.status(HttpStatus.OK).body(numberOfStudents);
+    }
 }
