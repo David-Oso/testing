@@ -66,4 +66,9 @@ public class StudentServiceImpl implements StudentService{
     public void deleteAllStudents() {
 
     }
+
+    @Override
+    public Long studentCount() {
+        return studentRepository.count();
+    }
 }

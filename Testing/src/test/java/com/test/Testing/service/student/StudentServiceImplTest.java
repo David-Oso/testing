@@ -70,6 +70,8 @@ class StudentServiceImplTest {
 
     @Test
     void getAllStudents() {
+        Long numberOfStudents = 2L;
+        assertThat(studentService.studentCount()).isEqualTo(numberOfStudents);
     }
 
     @Test
