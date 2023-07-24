@@ -16,7 +16,7 @@ public class TeacherServiceImpl implements TeacherService{
     private final TeacherRepository teacherRepository;
     private final TeacherConfig teacherConfig;
 
-    @PostConstruct
+//    @PostConstruct
     private void registerInAppTeacher(){
         Teacher teacher = new Teacher();
         AppUser appUser = new AppUser();
@@ -35,5 +35,11 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public String login(TeacherLoginRequest teacherLoginRequest) {
         return null;
+    }
+
+    @Override
+    public Teacher getTeacherByEmail(String email) {
+        return teacherRepository.findByAppUser_Email(email).orElseThrow(
+                ()-> new RuntimeException("Teacher not found"));
     }
 }
