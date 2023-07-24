@@ -41,19 +41,15 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public String writeToAStudent(Long firstStudentId, Long secondStudentId) {
-        return null;
-    }
-
-    @Override
     public Student getStudentById(Long studentId) {
-        return null;
+        return studentRepository.findById(studentId).orElseThrow(
+                ()-> new RuntimeException("Student with this is not found"));
     }
 
     @Override
     public Student getStudentByEmail(String email) {
         return studentRepository.getStudentsByAppUser_Email(email).orElseThrow(
-                ()-> new RuntimeException("Student with email %s not found".formatted(email)));
+                ()-> new RuntimeException("Student with this email not found"));
     }
 
     @Override

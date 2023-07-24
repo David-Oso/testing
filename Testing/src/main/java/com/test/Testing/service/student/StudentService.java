@@ -9,7 +9,6 @@ import java.util.List;
 public interface StudentService {
     String registerStudent(RegisterStudentRequest registerStudentRequest);
     String login(LoginRequest loginRequest);
-    String writeToAStudent(Long firstStudentId, Long secondStudentId);
     Student getStudentById(Long studentId);
     Student getStudentByEmail(String email);
     List<Student> getAllStudents();

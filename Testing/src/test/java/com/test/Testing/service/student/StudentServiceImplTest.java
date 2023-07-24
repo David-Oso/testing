@@ -57,10 +57,6 @@ class StudentServiceImplTest {
     }
 
     @Test
-    void writeToAStudent() {
-    }
-
-    @Test
     void getStudentById() {
     }
 
