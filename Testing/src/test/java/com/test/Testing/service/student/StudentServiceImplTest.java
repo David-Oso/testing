@@ -58,6 +58,8 @@ class StudentServiceImplTest {
 
     @Test
     void getStudentById() {
+        Student student = studentService.getStudentById(1L);
+        assertThat(student.getAppUser().getFirstName()).isEqualTo(registerStudentRequest1.getFirstName());
     }
 
     @Test
