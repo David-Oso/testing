@@ -19,5 +19,4 @@ public class Teacher {
     private AppUser appUser;
     @Column(unique = true)
     private String identity;
-    private final Role role = Role.TEACHER;
 }
