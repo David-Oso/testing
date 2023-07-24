@@ -34,7 +34,11 @@ public class TeacherServiceImpl implements TeacherService{
 
     @Override
     public String login(TeacherLoginRequest teacherLoginRequest) {
-        return null;
+        Teacher teacher = getTeacherByEmail(teacherLoginRequest.getEmail());
+        AppUser appUser = teacher.getAppUser();
+        if(appUser.getPassword().equals(teacherLoginRequest.getPassword()))
+            return "Authentication Successful";
+        throw new RuntimeException("Incorrect Password");
     }
 
     @Override
