@@ -16,6 +16,8 @@ class TeacherServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        teacherLoginRequest = new TeacherLoginRequest();
+        teacherLoginRequest.setEmail();
     }
 
     @Test
