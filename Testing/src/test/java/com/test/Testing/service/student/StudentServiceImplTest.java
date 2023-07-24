@@ -1,5 +1,6 @@
 package com.test.Testing.service.student;
 
+import com.test.Testing.data.dto.request.LoginRequest;
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
 import com.test.Testing.data.model.Gender;
 import com.test.Testing.data.model.Student;
@@ -15,8 +16,9 @@ class StudentServiceImplTest {
     @Autowired StudentService studentService;
     private RegisterStudentRequest registerStudentRequest1;
     private RegisterStudentRequest registerStudentRequest2;
+    private LoginRequest loginRequest;
 
-    @BeforeEach
+    @BeforeEachg
     void setUp() {
         registerStudentRequest1 = new RegisterStudentRequest();
         registerStudentRequest1.setFirstName("Bola");

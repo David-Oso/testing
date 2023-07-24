@@ -33,8 +33,11 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public String login(LoginRequest loginRequest) {
-
-        return null;
+        Student student = getStudentByEmail(loginRequest.getEmail());
+        AppUser appUser = student.getAppUser();
+        if(appUser.getPassword().equals(loginRequest.getPassword()))
+            return "Authentication Successful";
+        else throw new RuntimeException("Incorrect emil of password");
     }
 
     @Override
