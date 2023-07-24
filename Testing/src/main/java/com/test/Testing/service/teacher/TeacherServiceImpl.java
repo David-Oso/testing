@@ -36,10 +36,10 @@ public class TeacherServiceImpl implements TeacherService{
     public String login(TeacherLoginRequest teacherLoginRequest) {
         Teacher teacher = getTeacherByEmail(teacherLoginRequest.getEmail());
         AppUser appUser = teacher.getAppUser();
-        if(!(teacher.getIdentity().equals(teacherLoginRequest.getIdentity())))
-            throw new RuntimeException("Invalid teacher identity");
-        else if(!(appUser.getPassword().equals(teacherLoginRequest.getPassword())))
+        if(!(appUser.getPassword().equals(teacherLoginRequest.getPassword())))
             throw new RuntimeException("Incorrect Password");
+        else if(!(teacher.getIdentity().equals(teacherLoginRequest.getIdentity())))
+            throw new RuntimeException("Invalid teacher identity");
         else return "Authentication Successful";
     }
 

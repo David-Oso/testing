@@ -17,11 +17,15 @@ class TeacherServiceImplTest {
     @BeforeEach
     void setUp() {
         teacherLoginRequest = new TeacherLoginRequest();
-        teacherLoginRequest.setEmail();
+        teacherLoginRequest.setEmail("noreply@testing.com");
+        teacherLoginRequest.setPassword("TeacherPassword");
+        teacherLoginRequest.setIdentity("teacher101");
     }
 
     @Test
     void login() {
+        String response = teacherService.login(teacherLoginRequest);
+        assertThat(response).isEqualTo("Authentication Successful");
     }
 
     @Test
