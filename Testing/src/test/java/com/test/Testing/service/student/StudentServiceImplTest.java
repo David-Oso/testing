@@ -18,7 +18,7 @@ class StudentServiceImplTest {
     private RegisterStudentRequest registerStudentRequest2;
     private LoginRequest loginRequest;
 
-    @BeforeEachg
+    @BeforeEach
     void setUp() {
         registerStudentRequest1 = new RegisterStudentRequest();
         registerStudentRequest1.setFirstName("Bola");
@@ -35,6 +35,10 @@ class StudentServiceImplTest {
         registerStudentRequest2.setEmail("ayo@gmail.com");
         registerStudentRequest2.setPassword("Password");
         registerStudentRequest2.setGender(Gender.MALE);
+
+        loginRequest = new LoginRequest();
+        loginRequest.setEmail("bola@gmail.com");
+        loginRequest.setPassword("Password");
     }
 
     @Test
@@ -48,6 +52,8 @@ class StudentServiceImplTest {
 
     @Test
     void login() {
+        String response = studentService.login(loginRequest);
+        assertThat(response).isEqualTo("Authentication Successful");
     }
 
     @Test

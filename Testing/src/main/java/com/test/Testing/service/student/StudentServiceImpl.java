@@ -37,7 +37,7 @@ public class StudentServiceImpl implements StudentService{
         AppUser appUser = student.getAppUser();
         if(appUser.getPassword().equals(loginRequest.getPassword()))
             return "Authentication Successful";
-        else throw new RuntimeException("Incorrect emil of password");
+        else throw new RuntimeException("Incorrect Password");
     }
 
     @Override
