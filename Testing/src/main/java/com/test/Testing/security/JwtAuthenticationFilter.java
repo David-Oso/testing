@@ -1,4 +1,4 @@
 package com.test.Testing.security;
 
-public class JwtAuthenticationFilter g{
+public class JwtAuthenticationFilter {
 }
