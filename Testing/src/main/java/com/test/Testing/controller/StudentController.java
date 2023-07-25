@@ -4,6 +4,7 @@ import com.test.Testing.data.dto.request.LoginRequest;
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
 import com.test.Testing.data.model.Student;
 import com.test.Testing.service.student.StudentService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,24 +19,24 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("register")
-    public ResponseEntity<?> registerStudent(@RequestBody RegisterStudentRequest registerStudentRequest){
+    public ResponseEntity<?> registerStudent(@Valid @RequestBody RegisterStudentRequest registerStudentRequest){
         String response = studentService.registerStudent(registerStudentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest){
         String response = studentService.login(loginRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("get/{id}")
-    public ResponseEntity<?> getStudentById(@PathVariable Long id){
+    public ResponseEntity<?> getStudentById(@Valid @PathVariable Long id){
         Student student = studentService.getStudentById(id);
         return ResponseEntity.ok(student);
     }
 
     @GetMapping("get")
-    public ResponseEntity<?> getStudentByEmail(@RequestParam String email){
+    public ResponseEntity<?> getStudentByEmail(@Valid @RequestParam String email){
         Student student = studentService.getStudentByEmail(email);
         return ResponseEntity.ok(student);
     }
@@ -47,7 +48,7 @@ public class StudentController {
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deleteStudentById(@PathVariable Long id){
+    public ResponseEntity<?> deleteStudentById(@Valid@PathVariable Long id){
         studentService.deleteStudentById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Student deleted.");
     }
