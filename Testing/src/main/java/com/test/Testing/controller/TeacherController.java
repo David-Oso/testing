@@ -22,7 +22,7 @@ public class TeacherController {
     }
 
     @GetMapping("get/email")
-    public ResponseEntity<?> getTeacherByEmail(@RequestParam String email){
+    public ResponseEntity<?> getTeacherByEmail(@Valid @RequestParam String email){
         Teacher teacher = teacherService.getTeacherByEmail(email);
         return ResponseEntity.ok(teacher);
     }
