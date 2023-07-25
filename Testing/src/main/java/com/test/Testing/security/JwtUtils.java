@@ -1,10 +1,12 @@
 package com.test.Testing.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -65,8 +67,21 @@ public class JwtUtils {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS512)
                 .compact();
     }
+    public Boolean validateToken(String token){
+        try {
+        Jwts.parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token);
+        return true; // Token is valid and signed
+        } catch (SignatureException e) {
+        return false; // Unsigned token
+        } catch (JwtException e) {
+        return false; // Invalid token or signature
+        }
+    }
 
-    public Boolean validateToken(String token, UserDetails userDetails){
+    public Boolean isTokenValid(String token, UserDetails userDetails){
         final String userName = extractUsername(token);
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
