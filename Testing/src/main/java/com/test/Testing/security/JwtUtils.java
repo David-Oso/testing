@@ -85,16 +85,3 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
-
-//    public Boolean validateToken(String token) {
-//        try {
-//            Jwts.parser()
-//                    .setSigningKey(jwtSecretKey)
-//                    .parseClaimsJws(token);
-//            return true; // Token is signed
-//        } catch (SignatureException e) {
-//            return false; //unsigned token
-//        } catch (JwtException e) {
-//            return false; // invalid token
-//        }
-//    }
