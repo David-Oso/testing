@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/testing/teacher/")
+@RequestMapping("/api/v1/testing/teacher/")
 public class TeacherController {
     private final TeacherService teacherService;
 
     @PostMapping("login")
-    public ResponseEntity<?> teacherLogin(TeacherLoginRequest teacherLoginRequest){
+    public ResponseEntity<?> teacherLogin(@RequestBody TeacherLoginRequest teacherLoginRequest){
         String response = teacherService.login(teacherLoginRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

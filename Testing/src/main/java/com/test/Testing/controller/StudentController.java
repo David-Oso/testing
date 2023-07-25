@@ -18,12 +18,12 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("register")
-    public ResponseEntity<?> registerStudent(RegisterStudentRequest registerStudentRequest){
+    public ResponseEntity<?> registerStudent(@RequestBody RegisterStudentRequest registerStudentRequest){
         String response = studentService.registerStudent(registerStudentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @PostMapping("login")
-    public ResponseEntity<?> login(LoginRequest loginRequest){
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         String response = studentService.login(loginRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
