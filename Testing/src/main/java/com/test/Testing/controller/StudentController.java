@@ -38,7 +38,7 @@ public class StudentController {
     @GetMapping("get/email")
     public ResponseEntity<?> getStudentByEmail(@Valid @RequestParam String email){
         Student student = studentService.getStudentByEmail(email);
-        return ResponseEntity.ok(student)e;
+        return ResponseEntity.ok(student);f
     }
 
     @GetMapping("all/get")
@@ -57,9 +57,9 @@ public class StudentController {
         studentService.deleteAllStudents();
         return ResponseEntity.status(HttpStatus.OK).body("All students deleted");
     }
-    @GetMapping
+    @GetMapping("student_count")
     public ResponseEntity<?> getNumberOfStudents(){
         Long  numberOfStudents = studentService.getNumberOfStudents();
-        return ResponseEntity.status(HttpStatus.OK).body(numberOfStudents);
+        return ResponseEntity.status(HttpStatus.OK).body("The total number of students is: %s".formatted(numberOfStudents));
     }
 }
