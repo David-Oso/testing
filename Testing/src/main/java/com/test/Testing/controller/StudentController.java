@@ -32,13 +32,13 @@ public class StudentController {
     @GetMapping("get/{id}")
     public ResponseEntity<?> getStudentById(@Valid @PathVariable Long id){
         Student student = studentService.getStudentById(id);
-        return ResponseEntity.ok(student)w;
+        return ResponseEntity.ok(student);
     }
 
-    @GetMapping("get")
+    @GetMapping("get/email")
     public ResponseEntity<?> getStudentByEmail(@Valid @RequestParam String email){
         Student student = studentService.getStudentByEmail(email);
-        return ResponseEntity.ok(student);
+        return ResponseEntity.ok(student)e;
     }
 
     @GetMapping("all/get")
