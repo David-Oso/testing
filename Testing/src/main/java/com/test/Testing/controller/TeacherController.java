@@ -21,7 +21,7 @@ public class TeacherController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("get")
+    @GetMapping("get/email")
     public ResponseEntity<?> getTeacherByEmail(@RequestParam String email){
         Teacher teacher = teacherService.getTeacherByEmail(email);
         return ResponseEntity.ok(teacher);
