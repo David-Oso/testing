@@ -2,6 +2,8 @@ package com.test.Testing.controller;
 
 import com.test.Testing.data.dto.request.LoginRequest;
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
+import com.test.Testing.data.dto.response.LoginResponse;
+import com.test.Testing.data.dto.response.RegisterResponse;
 import com.test.Testing.data.model.Student;
 import com.test.Testing.service.student.StudentService;
 import jakarta.validation.Valid;
@@ -20,12 +22,12 @@ public class StudentController {
 
     @PostMapping("register")
     public ResponseEntity<?> registerStudent(@Valid @RequestBody RegisterStudentRequest registerStudentRequest){
-        String response = studentService.registerStudent(registerStudentRequest);
+        RegisterResponse response = studentService.registerStudent(registerStudentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @PostMapping("login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest){
-        String response = studentService.login(loginRequest);
+        LoginResponse response = studentService.login(loginRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

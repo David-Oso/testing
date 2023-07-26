@@ -46,21 +46,20 @@ class StudentServiceImplTest {
     @Test
     void registerStudent() {
         RegisterResponse response1 = studentService.registerStudent(registerStudentRequest1);
-        assertThat(response1.getMessage()).isEqualTo("Student Registration Successful");
+        assertThat(response1.getMessage()).isEqualTo("Registration Successful");
         assertThat(response1.isSuccess()).isEqualTo(true);
         assertThat(response1.getJwtTokenResponse()).isNotNull();
 
         RegisterResponse response2 = studentService.registerStudent(registerStudentRequest2);
-        assertThat(response2.getMessage()).isEqualTo("Student Registration Successful");
+        assertThat(response2.getMessage()).isEqualTo("Registration Successful");
         assertThat(response2.isSuccess()).isEqualTo(true);
         assertThat(response2.getJwtTokenResponse()).isNotNull();
-
     }
 
     @Test
     void login() {
         LoginResponse response = studentService.login(loginRequest);
-        assertThat(response.getMessage()).isEqualTo("Student Registration Successful");
+        assertThat(response.getMessage()).isEqualTo("Authentication Successful");
         assertThat(response.isSuccess()).isEqualTo(true);
         assertThat(response.getJwtTokenResponse()).isNotNull();
     }

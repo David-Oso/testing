@@ -60,12 +60,11 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
+        try{
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
         );
-//
-//        Map<String, Object> claims = authentication.getAuthorities().stream()
-//                .collect(Collectors.toMap(authority -> "claim", Function.identity()));
+
         AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
         String email = user.getUsername();
 
@@ -75,6 +74,9 @@ public class StudentServiceImpl implements StudentService{
                 .isSuccess(true)
                 .jwtTokenResponse(jwtResponse)
                 .build();
+        }catch (Exception exception){
+            throw new RuntimeException(exception.getMessage());
+        }
     }
 
     @Override

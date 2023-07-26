@@ -27,7 +27,7 @@ public class TeacherServiceImpl implements TeacherService{
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
 
-    @PostConstruct
+//    @PostConstruct
     private void registerInAppTeacher(){
         Teacher teacher = new Teacher();
         AppUser appUser = new AppUser();

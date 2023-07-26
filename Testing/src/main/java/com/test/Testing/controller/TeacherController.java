@@ -1,6 +1,7 @@
 package com.test.Testing.controller;
 
 import com.test.Testing.data.dto.request.TeacherLoginRequest;
+import com.test.Testing.data.dto.response.LoginResponse;
 import com.test.Testing.data.model.Teacher;
 import com.test.Testing.service.teacher.TeacherService;
 import jakarta.validation.Valid;
@@ -17,7 +18,7 @@ public class TeacherController {
 
     @PostMapping("login")
     public ResponseEntity<?> teacherLogin(@Valid @RequestBody TeacherLoginRequest teacherLoginRequest){
-        String response = teacherService.login(teacherLoginRequest);
+        LoginResponse response = teacherService.login(teacherLoginRequest);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
