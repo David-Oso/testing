@@ -67,8 +67,8 @@ public class StudentServiceImpl implements StudentService{
 
         AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
         String email = user.getUsername();
-
-        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(email);
+        Student student = getStudentByEmail(email);
+        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(student.getAppUser());
         return LoginResponse.builder()
                 .message("Authentication Successful")
                 .isSuccess(true)

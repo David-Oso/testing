@@ -27,7 +27,7 @@ public class TeacherServiceImpl implements TeacherService{
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
 
-//    @PostConstruct
+    @PostConstruct
     private void registerInAppTeacher(){
         Teacher teacher = new Teacher();
         AppUser appUser = new AppUser();
@@ -54,7 +54,7 @@ public class TeacherServiceImpl implements TeacherService{
         AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
         String email = user.getUsername();
         Teacher teacher = getTeacherByEmail(email);
-        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(email);
+        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(teacher.getAppUser());
         if(teacher.getIdentity().equals(teacherLoginRequest.getIdentity()))
             return LoginResponse.builder()
                     .message("Authentication Successful")
