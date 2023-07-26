@@ -2,42 +2,79 @@ package com.test.Testing.service.student;
 
 import com.test.Testing.data.dto.request.LoginRequest;
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
+import com.test.Testing.data.dto.response.JwtTokenResponse;
+import com.test.Testing.data.dto.response.LoginResponse;
+import com.test.Testing.data.dto.response.RegisterResponse;
 import com.test.Testing.data.model.AppUser;
 import com.test.Testing.data.model.Role;
 import com.test.Testing.data.model.Student;
 import com.test.Testing.data.repository.StudentRepository;
+import com.test.Testing.security.AuthenticatedUser;
+import com.test.Testing.service.jwt.JwtTokenService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenService jwtTokenService;
+    private final ModelMapper modelMapper;
     @Override
-    public String registerStudent(RegisterStudentRequest registerStudentRequest) {
+    public RegisterResponse registerStudent(RegisterStudentRequest registerStudentRequest) {
         Student student = new Student();
-        AppUser appUser = new AppUser();
-        appUser.setFirstName(registerStudentRequest.getFirstName());
-        appUser.setLastName(registerStudentRequest.getLastName());
-        appUser.setPhoneNumber(registerStudentRequest.getPhoneNumber());
-        appUser.setEmail(registerStudentRequest.getEmail());
-        appUser.setPassword(registerStudentRequest.getPassword());
-        appUser.setRole(Role.STUDENT);
+        AppUser appUser = getAppUser(registerStudentRequest);
 
         student.setAppUser(appUser);
         student.setGender(registerStudentRequest.getGender());
-        studentRepository.save(student);
-        return "Student Registration Successful";
+        Student savedStudent = studentRepository.save(student);
+
+        String email = savedStudent
+                .getAppUser().getEmail();
+
+        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(email);
+        return RegisterResponse.builder()
+                .message("Registration Successful")
+                .isSuccess(true)
+                .jwtTokenResponse(jwtResponse)
+                .build();
     }
 
+    private AppUser getAppUser(RegisterStudentRequest registerStudentRequest) {
+        AppUser appUser = modelMapper.map(registerStudentRequest, AppUser.class);
+        String encodedPassword = passwordEncoder.encode(registerStudentRequest.getPassword());
+        appUser.setPassword(encodedPassword);
+        appUser.setRole(Role.STUDENT);
+        return appUser;
+    }
+
+
     @Override
-    public String login(LoginRequest loginRequest) {
-        Student student = getStudentByEmail(loginRequest.getEmail());
-        AppUser appUser = student.getAppUser();
-        if(appUser.getPassword().equals(loginRequest.getPassword()))
-            return "Authentication Successful";
-        else throw new RuntimeException("Incorrect Password");
+    public LoginResponse login(LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+        );
+//
+//        Map<String, Object> claims = authentication.getAuthorities().stream()
+//                .collect(Collectors.toMap(authority -> "claim", Function.identity()));
+        AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
+        String email = user.getUsername();
+
+        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(email);
+        return LoginResponse.builder()
+                .message("Authentication Successful")
+                .isSuccess(true)
+                .jwtTokenResponse(jwtResponse)
+                .build();
     }
 
     @Override

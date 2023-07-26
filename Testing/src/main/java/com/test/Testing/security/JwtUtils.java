@@ -45,23 +45,23 @@ public class JwtUtils {
                 .getBody();
     }
 
-    public String generateAccessToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateAccessToken(String email){
+        return generateToken(new HashMap<>(), email);
     }
 
-    private String generateToken(HashMap<String, Object> extraClaims, UserDetails userDetails) {
-        return buildJwtToken(extraClaims, userDetails, accessTokenExpiration);
+    private String generateToken(HashMap<String, Object> extraClaims, String email) {
+        return buildJwtToken(extraClaims, email, accessTokenExpiration);
     }
 
-    public String generateRefreshToken(UserDetails userDetails){
-        return buildJwtToken(new HashMap<>(), userDetails, refreshTokenExpiration);
+    public String generateRefreshToken(String email){
+        return buildJwtToken(new HashMap<>(), email, refreshTokenExpiration);
     }
 
-    private String buildJwtToken(Map<String, Object> claims, UserDetails userDetails, Long expiration) {
+    private String buildJwtToken(Map<String, Object> claims, String email, Long expiration) {
         return Jwts
                 .builder()
                 .setClaims(claims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(Instant.now().plusSeconds(expiration)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS512)

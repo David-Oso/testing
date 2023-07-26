@@ -2,6 +2,8 @@ package com.test.Testing.service.student;
 
 import com.test.Testing.data.dto.request.LoginRequest;
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
+import com.test.Testing.data.dto.response.LoginResponse;
+import com.test.Testing.data.dto.response.RegisterResponse;
 import com.test.Testing.data.model.Gender;
 import com.test.Testing.data.model.Student;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,17 +45,24 @@ class StudentServiceImplTest {
 
     @Test
     void registerStudent() {
-        String response1 = studentService.registerStudent(registerStudentRequest1);
-        assertThat(response1).isEqualTo("Student Registration Successful");
+        RegisterResponse response1 = studentService.registerStudent(registerStudentRequest1);
+        assertThat(response1.getMessage()).isEqualTo("Student Registration Successful");
+        assertThat(response1.isSuccess()).isEqualTo(true);
+        assertThat(response1.getJwtTokenResponse()).isNotNull();
 
-        String response2 = studentService.registerStudent(registerStudentRequest2);
-        assertThat(response2).isEqualTo("Student Registration Successful");
+        RegisterResponse response2 = studentService.registerStudent(registerStudentRequest2);
+        assertThat(response2.getMessage()).isEqualTo("Student Registration Successful");
+        assertThat(response2.isSuccess()).isEqualTo(true);
+        assertThat(response2.getJwtTokenResponse()).isNotNull();
+
     }
 
     @Test
     void login() {
-        String response = studentService.login(loginRequest);
-        assertThat(response).isEqualTo("Authentication Successful");
+        LoginResponse response = studentService.login(loginRequest);
+        assertThat(response.getMessage()).isEqualTo("Student Registration Successful");
+        assertThat(response.isSuccess()).isEqualTo(true);
+        assertThat(response.getJwtTokenResponse()).isNotNull();
     }
 
     @Test
