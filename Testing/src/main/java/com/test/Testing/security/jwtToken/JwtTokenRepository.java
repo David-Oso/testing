@@ -13,5 +13,5 @@ public interface JwtTokenRepository extends JpaRepository <JwtToken, Long>{
        where appuser.id = :id and (token.isExpired = false)
        """)
     List<JwtToken> findAllValidTokenByUser(Long id);
-    Optional<JwtToken> findBy(String token);
+    Optional<JwtToken> findByJwtToken(String token);
 }
