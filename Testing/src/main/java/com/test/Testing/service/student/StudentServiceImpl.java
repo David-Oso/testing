@@ -38,10 +38,7 @@ public class StudentServiceImpl implements StudentService{
         student.setGender(registerStudentRequest.getGender());
         Student savedStudent = studentRepository.save(student);
 
-        String email = savedStudent
-                .getAppUser().getEmail();
-
-        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(email);
+        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(savedStudent.getAppUser());
         return RegisterResponse.builder()
                 .message("Registration Successful")
                 .isSuccess(true)
@@ -98,12 +95,15 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public void deleteStudentById(Long studentId) {
+        Student student = getStudentById(studentId);
+        AppUser appUser = student.getAppUser();
+        jwtTokenService.deleteAllTokensByUserId(appUser.getId());
         studentRepository.deleteById(studentId);
-
     }
 
     @Override
     public void deleteAllStudents() {
+        jwtTokenService.deleteAllTokens();
         studentRepository.deleteAll();
     }
 

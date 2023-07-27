@@ -28,18 +28,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@Nonnull HttpServletRequest request,
                                     @Nonnull HttpServletResponse response,
                                     @Nonnull FilterChain filterChain) throws ServletException, IOException {
-//        String token = this.extractTokenFromRequest(request);
-//        if(StringUtils.hasText(token) && jwtUtils.validateToken(token)){
-//            String username = jwtUtils.extractUsername(token);
-//            UserDetails userDetails = jwtUserDetailService.loadUserByUsername(username);
-//            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-//                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//            usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetails(request));
-//            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-//        }
-//        filterChain.doFilter(request, response);
-        final String jwtToken = this.extractTokenFromRequest(request);
-        final String userName = jwtUtils.extractUsername(jwtToken);
+
+        String jwtToken = extractTokenFromRequest(request);
+        String userName = jwtUtils.extractUsername(jwtToken);
         if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.jwtUserDetailService.loadUserByUsername(userName);
             boolean isTokenValid = jwtTokenRepository.findByJwtToken(jwtToken)
@@ -55,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
     private String extractTokenFromRequest(HttpServletRequest request) {
-        final  String authHeader = request.getHeader("Authorization");
+        String authHeader = request.getHeader("Authorization");
         return StringUtils.hasText(authHeader) && StringUtils.
                 startsWithIgnoreCase(authHeader, "Bearer ") ?
                 authHeader.substring(7) : null;

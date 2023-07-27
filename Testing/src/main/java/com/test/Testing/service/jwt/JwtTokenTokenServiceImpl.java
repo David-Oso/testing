@@ -27,6 +27,17 @@ public class JwtTokenTokenServiceImpl implements JwtTokenService {
                 .build();
     }
 
+    @Override
+    public void deleteAllTokensByUserId(Long userId) {
+        var jwtTokens = jwtTokenRepository.findAllValidTokenByUser(userId);
+        jwtTokenRepository.deleteAll(jwtTokens);
+    }
+
+    @Override
+    public void deleteAllTokens() {
+        jwtTokenRepository.deleteAll();
+    }
+
     private void saveUserJwtToken(AppUser appUser, String token) {
         JwtToken jwtToken = JwtToken.builder()
                 .appUser(appUser)

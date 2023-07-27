@@ -5,4 +5,6 @@ import com.test.Testing.data.model.AppUser;
 
 public interface JwtTokenService {
     JwtTokenResponse getJwtTokens(AppUser appUser);
+    void deleteAllTokensByUserId(Long userId);
+    void deleteAllTokens();
 }
