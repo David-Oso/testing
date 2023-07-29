@@ -9,8 +9,6 @@ import com.test.Testing.data.model.AppUser;
 import com.test.Testing.data.model.Role;
 import com.test.Testing.data.model.Student;
 import com.test.Testing.data.repository.StudentRepository;
-import com.test.Testing.security.AuthenticatedUser;
-import com.test.Testing.service.jwt.JwtTokenService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,31 +23,33 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final JwtTokenService jwtTokenService;
+//    private final PasswordEncoder passwordEncoder;
+//    private final AuthenticationManager authenticationManager;
+//    private final JwtTokenService jwtTokenService;
     private final ModelMapper modelMapper;
     @Override
     public RegisterResponse registerStudent(RegisterStudentRequest registerStudentRequest) {
-        Student student = new Student();
-        AppUser appUser = getAppUser(registerStudentRequest);
-
-        student.setAppUser(appUser);
-        student.setGender(registerStudentRequest.getGender());
-        Student savedStudent = studentRepository.save(student);
-
-        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(savedStudent.getAppUser());
-        return RegisterResponse.builder()
-                .message("Registration Successful")
-                .isSuccess(true)
-                .jwtTokenResponse(jwtResponse)
-                .build();
+//        Student student = new Student();
+//        AppUser appUser = getAppUser(registerStudentRequest);
+//
+//        student.setAppUser(appUser);
+//        student.setGender(registerStudentRequest.getGender());
+//        Student savedStudent = studentRepository.save(student);
+//
+//        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(savedStudent.getAppUser());
+//        return RegisterResponse.builder()
+//                .message("Registration Successful")
+//                .isSuccess(true)
+//                .jwtTokenResponse(jwtResponse)
+//                .build();
+        return null;
     }
 
     private AppUser getAppUser(RegisterStudentRequest registerStudentRequest) {
         AppUser appUser = modelMapper.map(registerStudentRequest, AppUser.class);
-        String encodedPassword = passwordEncoder.encode(registerStudentRequest.getPassword());
-        appUser.setPassword(encodedPassword);
+//        String encodedPassword = passwordEncoder.encode(registerStudentRequest.getPassword());
+//        appUser.setPassword(encodedPassword);
+        appUser.setPassword(registerStudentRequest.getPassword());
         appUser.setRole(Role.STUDENT);
         return appUser;
     }
@@ -57,23 +57,24 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        try{
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-        );
-
-        AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
-        String email = user.getUsername();
-        Student student = getStudentByEmail(email);
-        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(student.getAppUser());
-        return LoginResponse.builder()
-                .message("Authentication Successful")
-                .isSuccess(true)
-                .jwtTokenResponse(jwtResponse)
-                .build();
-        }catch (Exception exception){
-            throw new RuntimeException(exception.getMessage());
-        }
+//        try{
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+//        );
+//
+//        AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
+//        String email = user.getUsername();
+//        Student student = getStudentByEmail(email);
+//        JwtTokenResponse jwtResponse = jwtTokenService.getJwtTokens(student.getAppUser());
+//        return LoginResponse.builder()
+//                .message("Authentication Successful")
+//                .isSuccess(true)
+//                .jwtTokenResponse(jwtResponse)
+//                .build();
+//        }catch (Exception exception){
+//            throw new RuntimeException(exception.getMessage());
+//        }
+        return null;
     }
 
     @Override
@@ -97,13 +98,13 @@ public class StudentServiceImpl implements StudentService{
     public void deleteStudentById(Long studentId) {
         Student student = getStudentById(studentId);
         AppUser appUser = student.getAppUser();
-        jwtTokenService.deleteAllTokensByUserId(appUser.getId());
+//        jwtTokenService.deleteAllTokensByUserId(appUser.getId());
         studentRepository.deleteById(studentId);
     }
 
     @Override
     public void deleteAllStudents() {
-        jwtTokenService.deleteAllTokens();
+//        jwtTokenService.deleteAllTokens();
         studentRepository.deleteAll();
     }
 
