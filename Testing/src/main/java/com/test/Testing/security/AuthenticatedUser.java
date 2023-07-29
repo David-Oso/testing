@@ -2,6 +2,7 @@ package com.test.Testing.security;
 
 import com.test.Testing.data.model.AppUser;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor
+@Builder
 public class AuthenticatedUser implements UserDetails {
     private final AppUser appUser;
 
