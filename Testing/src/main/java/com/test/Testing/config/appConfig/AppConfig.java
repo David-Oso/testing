@@ -1,4 +1,4 @@
-package com.test.Testing.config;
+package com.test.Testing.config.appConfig;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;

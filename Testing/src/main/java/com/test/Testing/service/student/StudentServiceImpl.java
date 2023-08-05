@@ -2,36 +2,22 @@ package com.test.Testing.service.student;
 
 import com.test.Testing.data.dto.request.LoginRequest;
 import com.test.Testing.data.dto.request.RegisterStudentRequest;
-import com.test.Testing.data.dto.response.JwtTokenResponse;
 import com.test.Testing.data.dto.response.LoginResponse;
 import com.test.Testing.data.dto.response.RegisterResponse;
 import com.test.Testing.data.model.AppUser;
 import com.test.Testing.data.model.Role;
 import com.test.Testing.data.model.Student;
 import com.test.Testing.data.repository.StudentRepository;
-import com.test.Testing.security.AuthenticatedUser;
-import com.test.Testing.security.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtils jwtUtils;
     private final ModelMapper modelMapper;
     @Override
     public RegisterResponse registerStudent(RegisterStudentRequest registerStudentRequest) {
@@ -43,27 +29,18 @@ public class StudentServiceImpl implements StudentService{
         Student savedStudent = studentRepository.save(student);
 
         String email = savedStudent.getAppUser().getEmail();
-        JwtTokenResponse jwtResponse = this.generateTokens(new HashMap<>(), email);
+//        JwtTokenResponse jwtResponse = this.generateTokens(new HashMap<>(), email);
         return RegisterResponse.builder()
                 .message("Registration Successful")
                 .isSuccess(true)
-                .jwtTokenResponse(jwtResponse)
-                .build();
-    }
-
-    private JwtTokenResponse generateTokens(Map<String, Object> claims, String email) {
-        String accessToken = jwtUtils.generateAccessToken(claims, email);
-        String refreshToken = jwtUtils.generateRefreshToken(email);
-
-        return JwtTokenResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
+//                .jwtTokenResponse(jwtResponse)
                 .build();
     }
 
     private AppUser getAppUser(RegisterStudentRequest registerStudentRequest) {
         AppUser appUser = modelMapper.map(registerStudentRequest, AppUser.class);
-        String encodedPassword = passwordEncoder.encode(registerStudentRequest.getPassword());
+//        String encodedPassword = passwordEncoder.encode(registerStudentRequest.getPassword());
+        String encodedPassword = registerStudentRequest.getPassword();
         appUser.setPassword(encodedPassword);
         appUser.setRole(Role.STUDENT);
         return appUser;
@@ -72,26 +49,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        try{
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-        );
-
-        Map<String, Object> claims = authentication.getAuthorities().stream()
-                .collect(Collectors.toMap(authority -> "claim", Function.identity()));
-
-        AuthenticatedUser user = (AuthenticatedUser) authentication.getPrincipal();
-        String email = user.getUsername();
-//        Student student = getStudentByEmail(email);
-        JwtTokenResponse jwtResponse = this.generateTokens(claims, email);
-        return LoginResponse.builder()
-                .message("Authentication Successful")
-                .isSuccess(true)
-                .jwtTokenResponse(jwtResponse)
-                .build();
-        }catch (Exception exception){
-            throw new RuntimeException(exception.getMessage());
-        }
+        return new LoginResponse();
     }
 
     @Override

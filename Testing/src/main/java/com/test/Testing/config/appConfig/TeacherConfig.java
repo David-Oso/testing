@@ -1,4 +1,4 @@
-package com.test.Testing.config;
+package com.test.Testing.config.appConfig;
 
 import com.test.Testing.data.model.Gender;
 import lombok.AllArgsConstructor;
