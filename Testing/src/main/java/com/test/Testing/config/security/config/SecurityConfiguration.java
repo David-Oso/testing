@@ -1,6 +1,7 @@
 package com.test.Testing.config.security.config;
 
 import com.test.Testing.config.security.filter.TestingAuthorizationFilter;
+import com.test.Testing.config.security.util.WhiteList;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +35,15 @@ public class SecurityConfiguration {
                 .sessionManagement(sessionManagement ->
                         sessionManagement
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize)
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                WhiteList.freeAccess())
+                        .permitAll()
+                        .requestMatchers(WhiteList.swagger())
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .addFilterBefore(testingAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 }
