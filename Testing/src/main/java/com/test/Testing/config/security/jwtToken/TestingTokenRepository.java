@@ -6,12 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface JwtTokenRepository extends JpaRepository<JwtToken, Long> {
+public interface TestingTokenRepository extends JpaRepository<TestingToken, Long> {
     @Query("""
-           select t from JwtToken  t inner join AppUser appuser\s
+           select t from TestingToken  t inner join AppUser appuser\s
            on t.appUser.id = appuser.id\s
            where appuser.id = :id and (t.isExpired = false or t.isRevoked = false)
            """)
-    List<JwtToken> findAllValidTokenByUser(Long id);
-    Optional<JwtToken> findJwtTokenByToken(String token);
+    List<TestingToken> findAllValidTokenByUser(Long id);
+    Optional<TestingToken> findJwtTokenByToken(String token);
 }

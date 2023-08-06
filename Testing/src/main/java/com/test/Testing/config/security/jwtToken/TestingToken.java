@@ -2,17 +2,15 @@ package com.test.Testing.config.security.jwtToken;
 
 import com.test.Testing.data.model.AppUser;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class JwtToken {
+public class TestingToken {
     @Id
     @GeneratedValue
     private Long id;
