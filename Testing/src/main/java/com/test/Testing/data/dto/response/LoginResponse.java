@@ -7,7 +7,5 @@ import lombok.*;
 @Getter
 @Builder
 public class LoginResponse {
-    private String message;
-    private boolean isSuccess;
     private JwtTokenResponse jwtTokenResponse;
 }

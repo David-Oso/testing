@@ -29,11 +29,4 @@ public class TestingTokenServiceImpl implements TestingTokenService {
             testingTokenRepository.save(testingToken);
         }
     }
-
-    @Override
-    public boolean isTokenValid(String anyToken) {
-        return getValidTokenByAnyToken(anyToken)
-                .map(testingtoken -> !testingtoken.isRevoked())
-                .orElse(false);
-    }
 }
